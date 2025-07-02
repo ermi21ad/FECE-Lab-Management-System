@@ -70,15 +70,13 @@ FECE-Lab-Management-System/
 
 ### 1. Clone the Repo
 
-2. Backend Setup
-bash
-Copy
-Edit
+## 2. Backend Setup
+
 cd backend
 npm install
 Create .env file:
 
-.env
+## .env
 
 DB_HOST=localhost
 DB_USER=root
@@ -86,25 +84,22 @@ DB_PASSWORD=yourpassword
 DB_NAME=fece_lab_management
 PORT=5000
 Start the backend:
+node server.js
 
-
-nodemon index.js
-3. Frontend Setup
+### 3. Frontend Setup
 Just open the HTML files inside the /faculty, /student, or /lab folders directly in the browser.
 Make sure the backend is running for API requests.
 
-🧪 Sample API Endpoints
+### 🧪 Sample API Endpoints
 Method	Route	Description
 GET	/students	Fetch all students
 POST	/students	Register a new student
 POST	/reports/submit	Upload a lab report (PDF)
 GET	/attendance/export	Export attendance as Excel
 
-📸 Screenshots
-Add screenshots of UI pages here if available (Faculty Dashboard, QR Scanner, etc.)
 
-📄 License
-This project is built for educational and academic purposes at Arba Minch University.
+https://amu-fece-lab-management-system.netlify.app/
+https://fece-lab-management-system-2.onrender.com/
 
 👨‍💻 Author
 Ermias Abebe

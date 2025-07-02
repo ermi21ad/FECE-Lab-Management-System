@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMU-FECE LMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#4B5563',  // Changed to ece-gray
+                    secondary: '#0056b3',
+                    accent: '#e74c3c',
+                    light: '#f4f4f9',
+                    'ece-gray': '#4B5563',  // Keeping your original definition
+                },
+                fontFamily: {
+                    sans: ['Inter', 'Segoe UI', 'sans-serif'],
+                },
+                animation: {
+                    'float': 'float 6s ease-in-out infinite',
+                    'fade-in': 'fadeIn 1s ease-in-out',
+                },
+                keyframes: {
+                    float: {
+                        '0%, 100%': { transform: 'translateY(0)' },
+                        '50%': { transform: 'translateY(-10px)' },
+                    },
+                    fadeIn: {
+                        '0%': { opacity: '0' },
+                        '100%': { opacity: '1' },
+                    }
+                }
+            }
+        }
+    }
+</script>
+</head>
+<body class="font-sans bg-light">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-primary shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="assets/images/logo.png" alt="AMU Logo" class="h-12 w-auto">
+                    <a href="#" class="text-white text-2xl font-bold tracking-tight">FECE <span class="gradient-text">LAB MANAGEMENT SYSTEM</span></a>
+                </div>
+                <a href="login.html" class="bg-white text-primary px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                    Login <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="blob top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="blob bottom-0 right-0 translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6 animate-fade-in">
+                Revolutionizing <span class="gradient-text">Lab Management</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                Advanced laboratory equipment management system designed for Arba Minch University's Faculty of Electrical and Computer Engineering.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="login.html" class="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    Get Started <i class="fas fa-rocket ml-2"></i>
+                </a>
+                <a href="#features" class="border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-primary/5 hover:shadow-lg transition-all duration-300">
+                    Explore Features <i class="fas fa-chevron-down ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">About <span class="gradient-text">Arba Minch University</span></h2>
+            <p class="text-xl text-gray-600 mb-12 max-w-4xl mx-auto">
+                As one of Ethiopia's premier higher education institutions, AMU is committed to excellence in education, research, and innovation. Our state-of-the-art laboratories and equipment support cutting-edge research and hands-on learning experiences.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-light p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Academic Excellence</h3>
+                    <p class="text-gray-600">Top-tier engineering programs with practical learning focus</p>
+                </div>
+                <div class="bg-light p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Research Facilities</h3>
+                    <p class="text-gray-600">State-of-the-art laboratories with modern equipment</p>
+                </div>
+                <div class="bg-light p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Innovation Hub</h3>
+                    <p class="text-gray-600">Fostering creativity and technological advancement</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gradient-to-b from-white to-light">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Key <span class="gradient-text">Features</span></h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Comprehensive tools designed to streamline laboratory operations and enhance learning experiences
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Equipment Management -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Equipment Management</h3>
+                    <p class="text-gray-600 mb-4">
+                        Comprehensive inventory tracking with real-time status updates for all lab equipment
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Inventory</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Tracking</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Status</span>
+                    </div>
+                </div>
+                
+                <!-- Lab & Equipment Booking -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lab & Equipment Booking</h3>
+                    <p class="text-gray-600 mb-4">
+                        Intuitive reservation system for labs and specific equipment with calendar integration
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Reservations</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Calendar</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Scheduling</span>
+                    </div>
+                </div>
+                
+                <!-- Maintenance Tracking -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Maintenance Tracking</h3>
+                    <p class="text-gray-600 mb-4">
+                        Automated maintenance scheduling and history tracking for all equipment
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Maintenance</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Alerts</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">History</span>
+                    </div>
+                </div>
+                
+                <!-- Equipment Tracking -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Equipment Tracking</h3>
+                    <p class="text-gray-600 mb-4">
+                        Real-time location tracking and status monitoring for all laboratory assets
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Location</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Monitoring</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">RFID</span>
+                    </div>
+                </div>
+                
+                <!-- Lab Scheduling -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lab Scheduling</h3>
+                    <p class="text-gray-600 mb-4">
+                        Efficient management of lab schedules with conflict detection and resolution
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Timetable</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Allocation</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Optimization</span>
+                    </div>
+                </div>
+                
+                <!-- Attendance Tracking -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Attendance Tracking</h3>
+                    <p class="text-gray-600 mb-4">
+                        QR code-based attendance system with automated reporting and analytics
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">QR Codes</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Reporting</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Analytics</span>
+                    </div>
+                </div>
+                
+                <!-- Resource Management -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Resource Management</h3>
+                    <p class="text-gray-600 mb-4">
+                        Centralized repository for lab manuals, protocols, and educational materials
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Documents</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Resources</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Library</span>
+                    </div>
+                </div>
+                
+                <!-- Issue Reporting -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="text-primary text-5xl mb-6 group-hover:animate-float">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Issue Reporting</h3>
+                    <p class="text-gray-600 mb-4">
+                        Streamlined system for reporting and tracking equipment or facility issues
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Tickets</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Support</span>
+                        <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">Resolution</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-12">Quick <span class="gradient-text">Links</span></h2>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://www.amu.edu.et" target="_blank" class="bg-light hover:bg-primary/10 px-6 py-3 rounded-lg font-medium text-gray-800 hover:text-primary transition-all duration-300 border border-gray-200 hover:border-primary/30 flex items-center">
+                    <i class="fas fa-globe mr-2"></i> University Website
+                </a>
+                <a href="https://www.amu.edu.et/en/amit-home" target="_blank" class="bg-light hover:bg-primary/10 px-6 py-3 rounded-lg font-medium text-gray-800 hover:text-primary transition-all duration-300 border border-gray-200 hover:border-primary/30 flex items-center">
+                    <i class="fas fa-user-graduate mr-2"></i> AMIT Portal
+                </a>
+                <a href="https://www.amu.edu.et/contact" target="_blank" class="bg-light hover:bg-primary/10 px-6 py-3 rounded-lg font-medium text-gray-800 hover:text-primary transition-all duration-300 border border-gray-200 hover:border-primary/30 flex items-center">
+                    <i class="fas fa-envelope mr-2"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">AMU FECE LMS</h3>
+                    <p class="text-gray-300">Advanced laboratory management system for the Faculty of Electrical and Computer Engineering.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="#features" class="text-gray-300 hover:text-white transition">Features</a></li>
+                        <li><a href="login.html" class="text-gray-300 hover:text-white transition">Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white text-xl transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl transition"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Arba Minch University - Laboratory Equipment Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

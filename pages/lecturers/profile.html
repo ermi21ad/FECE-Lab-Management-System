@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer - Profile Settings</title>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0 flex flex-col h-screen">
+            <div class="p-4 flex-1">
+                <img src="../../assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                   <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="block p-2 bg-blue-500 text-white rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li><a href="lab-schedule-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedule</span></a></li>
+                    <li><a href="assignment-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tasks"></i><span>Assignments</span></a></li>
+                    <li><a href="resource-requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-box"></i><span>Resource Requests</span></a></li>
+                    <li><a href="profile.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li><a href="qr-attendance.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-qrcode"></i><span>QR Attendance</span></a></li>
+                </ul>
+                </nav>
+            </div>
+            <div class="p-4">
+                <a href="../../login.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-bold" id="profile-initial">L</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">Lecturer</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-bars"></i><span>List</span></button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="../../login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <h1 class="text-2xl font-bold text-ece-gray mb-6 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile Settings</span></h1>
+
+                    <form id="profile-form" class="space-y-6">
+                        <!-- Personal Details -->
+                        <div>
+                            <h2 class="text-lg font-semibold text-ece-gray mb-4">Personal Details</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                                    <input type="text" name="full_name" class="mt-1 w-full p-2 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="email" name="email" class="mt-1 w-full p-2 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Assigned Courses</label>
+                                    <input type="text" name="assigned_courses" class="mt-1 w-full p-2 border rounded-md" placeholder="e.g., Circuits, DSP">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Change Password -->
+                        <div>
+                            <h2 class="text-lg font-semibold text-ece-gray mb-4">Change Password</h2>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Current Password</label>
+                                    <input type="password" name="currentPassword" class="mt-1 w-full p-2 border rounded-md">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">New Password</label>
+                                    <input type="password" name="newPassword" class="mt-1 w-full p-2 border rounded-md">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                                    <input type="password" name="confirmNewPassword" class="mt-1 w-full p-2 border rounded-md">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Picture -->
+                        <div>
+                            <h2 class="text-lg font-semibold text-ece-gray mb-4">Profile Picture</h2>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-ece-gray text-2xl" id="profile-picture">A</div>
+                                <input type="file" name="profile_picture" class="mt-1" accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-save"></i><span>Save Changes</span></button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../../scripts/lecturers/profile.js"></script>
+</body>
+</html>

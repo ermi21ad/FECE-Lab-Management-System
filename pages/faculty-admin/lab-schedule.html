@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Admin - Lab Schedule</title>
+    <link href="/src/output.css" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/styles/global.css">
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0">
+            <div class="p-4">
+                <img src="/assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                      <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="user-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-users"></i><span>User Management</span></a></li>
+                        <li><a href="lab-schedule.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedules</span></a></li>
+                        <li><a href="equipment-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></a></li>
+                        <li><a href="requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-inbox"></i><span>Requests</span></a></li>
+                        <li><a href="issue-reports.html" class="block p-2 bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-exclamation-triangle"></i><span>Issue Reports</span></a></li>
+                        <li><a href="reporting-analytics.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-chart-bar"></i><span>Reporting & Analytics</span></a></li>
+                        <li><a href="audit-logs.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-file-alt"></i><span>Audit Logs</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white text-lg font-bold" id="user-initial">U</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">User Name</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-bars"></i><span>List</span>
+                    </button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="/login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+            <main class="p-6 flex-1 overflow-y-auto flex">
+                <!-- Schedule Content -->
+                <div class="flex-1 bg-gray-100 p-4 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedule</span></h2>
+                        <div class="flex space-x-4">
+                            <button id="add-session-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-plus"></i><span>Add Session</span></button>
+                        </div>
+                    </div>
+                    <div class="mb-4 text-center text-gray-700">
+                        <p>Use the "Add Session" button to schedule a new lab session.</p>
+                    </div>
+                    <!-- Schedules Table -->
+                    <div class="overflow-x-auto">
+                        <table id="schedules-table" class="w-full text-sm text-left text-gray-700">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="p-2">Schedule ID</th>
+                                    <th class="p-2">Course</th>
+                                    <th class="p-2">Lecturer ID</th>
+                                    <th class="p-2">Lecturer</th>
+                                    <th class="p-2">Lab</th>
+                                    <th class="p-2">Batch</th>
+                                    <th class="p-2">Date</th>
+                                    <th class="p-2">Time</th>
+                                    <th class="p-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedules-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Add/Edit Session Modal -->
+        <div id="add-session-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-5 rounded-md w-full max-w-sm">
+                <h3 class="text-base font-medium text-ece-gray mb-3" id="modal-title">Add Lab Session</h3>
+                <form id="add-session-form" class="space-y-2">
+                    <input type="text" name="schedule_id" placeholder="Schedule ID (e.g., SCH/001)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="course_id" placeholder="Course ID (e.g., CS101)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="course_name" placeholder="Course Name (e.g., Intro to Programming)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="lecturer_id" placeholder="Lecturer ID (e.g., LEC/001)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="lecturer" placeholder="Lecturer Name (e.g., Dr. Smith)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="lab" placeholder="Lab (e.g., Lab 101)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="batch" placeholder="Batch (e.g., Batch A)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="date" name="schedule_date" placeholder="Schedule Date" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="time" name="start_time" placeholder="Start Time" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="time" name="end_time" placeholder="End Time" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="equipment" placeholder="Equipment (e.g., EQ/001,EQ/002)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none">
+                    <textarea name="notes" placeholder="Notes" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none resize-none" rows="3"></textarea>
+                    <input type="text" name="status" placeholder="Status (Pending, Scheduled, Completed, Cancelled)" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <div class="flex justify-end space-x-2 mt-3">
+                        <button type="button" id="close-modal" class="px-3 py-1 text-sm text-ece-gray hover:text-gray-700">Cancel</button>
+                        <button type="submit" class="px-3 py-1 text-sm bg-gray-500 text-white rounded-sm hover:bg-gray-600">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/global.js"></script>
+    <script src="/scripts/faculty-admin/lab-schedule.js"></script>
+</body>
+</html>

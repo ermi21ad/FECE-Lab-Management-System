@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance QR Scanner</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-200 p-4 font-sans">
+    <div class="max-w-7xl mx-auto flex flex-col gap-5">
+        <a href="dashboard.html" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-fit">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        
+        <div class="text-center p-5 bg-white rounded-lg shadow">
+            <h1 class="text-2xl font-bold text-gray-800">Student Attendance QR Scanner</h1>
+            <p class="text-gray-600">Scan student QR codes to mark attendance</p>
+        </div>
+
+        <div class="flex flex-col items-center gap-5 p-5 bg-white rounded-lg shadow">
+            <div id="reader" class="w-full max-w-xl mx-auto"></div>
+            <div class="flex flex-wrap gap-3">
+                <button id="startButton" class="px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition transform hover:-translate-y-1">
+                    Start Scanner
+                </button>
+                <button id="stopButton" class="px-5 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition transform hover:-translate-y-1">
+                    Stop Scanner
+                </button>
+                <button id="downloadButton" class="px-5 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition transform hover:-translate-y-1">
+                    Download Report
+                </button>
+            </div>
+        </div>
+
+        <div class="p-5 bg-white rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Today's Attendance Log</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="p-3 text-left font-medium text-gray-700">Student ID</th>
+                            <th class="p-3 text-left font-medium text-gray-700">Name</th>
+                            <th class="p-3 text-left font-medium text-gray-700">Time</th>
+                            <th class="p-3 text-left font-medium text-gray-700">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceLog">
+                        <!-- Attendance entries will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="fixed top-5 right-5 py-3 px-6 rounded text-white opacity-0 transition-opacity duration-300"></div>
+
+    <script>
+        class AttendanceSystem {
+            constructor() {
+                this.html5QrcodeScanner = null;
+                this.attendanceLog = [];
+                this.isScanning = false;
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                document.getElementById('startButton').addEventListener('click', () => this.startScanner());
+                document.getElementById('stopButton').addEventListener('click', () => this.stopScanner());
+                document.getElementById('downloadButton').addEventListener('click', () => this.downloadReport());
+            }
+
+            startScanner() {
+                if (this.isScanning) return;
+
+                this.html5QrcodeScanner = new Html5Qrcode("reader");
+                const config = {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 },
+                    aspectRatio: 1.0
+                };
+
+                this.html5QrcodeScanner.start(
+                    { facingMode: "environment" },
+                    config,
+                    this.onScanSuccess.bind(this),
+                    this.onScanError.bind(this)
+                );
+
+                this.isScanning = true;
+                this.showNotification('Scanner started', 'success');
+            }
+
+            stopScanner() {
+                if (!this.isScanning) return;
+
+                this.html5QrcodeScanner.stop().then(() => {
+                    this.isScanning = false;
+                    this.showNotification('Scanner stopped', 'error');
+                });
+            }
+
+            onScanSuccess(decodedText) {
+                try {
+                    // Extract student data from the QR code
+                    // Format from profile page: "Name: [name]\nStudent ID: [id]"
+                    const lines = decodedText.split('\n');
+                    const nameMatch = lines[0].match(/Name: (.+)/);
+                    const idMatch = lines[1]?.match(/Student ID: (.+)/);
+                    
+                    if (nameMatch && idMatch) {
+                        const studentData = {
+                            name: nameMatch[1],
+                            id: idMatch[1]
+                        };
+                        this.processAttendance(studentData);
+                    } else {
+                        throw new Error("Invalid QR code format");
+                    }
+                } catch (error) {
+                    this.showNotification('Invalid QR code format', 'error');
+                }
+            }
+
+            onScanError(error) {
+                // Handle scan errors if needed
+            }
+
+            processAttendance(studentData) {
+                const now = new Date();
+                const attendanceTime = now.toLocaleTimeString();
+                const status = this.determineStatus(now);
+
+                const attendanceEntry = {
+                    studentId: studentData.id,
+                    name: studentData.name,
+                    time: attendanceTime,
+                    status: status
+                };
+
+                if (!this.isDuplicateEntry(studentData.id)) {
+                    this.attendanceLog.push(attendanceEntry);
+                    this.updateAttendanceTable(attendanceEntry);
+                    this.showNotification(`Attendance marked for ${studentData.name}`, 'success');
+                } else {
+                    this.showNotification('Attendance already marked for this student', 'error');
+                }
+            }
+
+            determineStatus(time) {
+                const hour = time.getHours();
+                const minutes = time.getMinutes();
+                // Example: Consider late after 9:15 AM
+                return (hour > 9 || (hour === 9 && minutes > 15)) ? 'late' : 'present';
+            }
+
+            isDuplicateEntry(studentId) {
+                return this.attendanceLog.some(entry => entry.studentId === studentId);
+            }
+
+            updateAttendanceTable(entry) {
+                const tbody = document.getElementById('attendanceLog');
+                const row = document.createElement('tr');
+                row.className = "hover:bg-gray-50 border-b border-gray-200";
+                row.innerHTML = `
+                    <td class="p-3">${entry.studentId}</td>
+                    <td class="p-3">${entry.name}</td>
+                    <td class="p-3">${entry.time}</td>
+                    <td class="p-3">
+                        <span class="py-1 px-3 rounded-full text-xs 
+                            ${entry.status === 'present' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}">
+                            ${entry.status}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            }
+
+            downloadReport() {
+                const csvContent = this.generateCSV();
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `attendance_${new Date().toLocaleDateString()}.csv`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            generateCSV() {
+                const headers = ['Student ID', 'Name', 'Time', 'Status'];
+                const rows = this.attendanceLog.map(entry => 
+                    [entry.studentId, entry.name, entry.time, entry.status]
+                );
+                return [headers, ...rows]
+                    .map(row => row.join(','))
+                    .join('\n');
+            }
+
+            showNotification(message, type) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `fixed top-5 right-5 py-3 px-6 rounded text-white opacity-100 transition-opacity duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+                
+                setTimeout(() => {
+                    notification.className = notification.className.replace('opacity-100', 'opacity-0');
+                }, 3000);
+            }
+        }
+
+        // Initialize the attendance system when the page loads
+        window.addEventListener('load', () => {
+            window.attendanceSystem = new AttendanceSystem();
+        });
+    </script>
+</body>
+</html>

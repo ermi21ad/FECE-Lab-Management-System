@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Admin - Requests</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/styles/global.css">
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0 flex flex-col h-screen">
+            <div class="p-4 flex-1">
+                <img src="/assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                      <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="user-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-users"></i><span>User Management</span></a></li>
+                        <li><a href="lab-schedule.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedules</span></a></li>
+                        <li><a href="resource-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-box"></i><span>Resource Management</span></a></li>
+                        <li><a href="equipment-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></a></li>
+                        <li><a href="requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-inbox"></i><span>Requests</span></a></li>
+                        <li><a href="issue-reports.html" class="block p-2 bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-exclamation-triangle"></i><span>Issue Reports</span></a></li>
+                        <li><a href="reporting-analytics.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-chart-bar"></i><span>Reporting & Analytics</span></a></li>
+                        <li><a href="audit-logs.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-file-alt"></i><span>Audit Logs</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white text-lg font-bold" id="user-initial">U</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">User Name</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-bars"></i><span>List</span>
+                    </button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="/login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <h1 class="text-2xl font-bold text-ece-gray mb-4"><i class="fas fa-inbox"></i> Faculty Admin - Requests</h1>
+
+                    <div class="flex space-x-4 mb-4">
+                        <button onclick="showStudentRequests()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Student Requests</button>
+                        <button onclick="showLecturerRequests()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Lecturer Requests</button>
+                    </div>
+
+                    <!-- Student Requests -->
+                    <div id="student-requests" class="">
+                        <h2 class="text-xl font-semibold text-ece-gray mt-6">Student Requests</h2>
+
+                        <!-- Lab Booking Requests -->
+                        <h3 class="text-lg font-medium mt-4">Lab Booking Requests</h3>
+                        <div class="overflow-x-auto mb-6">
+                            <table id="student-lab-requests-table" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Request ID</th>
+                                        <th class="p-2">Type</th>
+                                        <th class="p-2">Student</th>
+                                        <th class="p-2">Details</th>
+                                        <th class="p-2">Status</th>
+                                        <th class="p-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-lab-requests-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Equipment Booking Requests -->
+                        <h3 class="text-lg font-medium mt-4">Equipment Booking Requests</h3>
+                        <div class="overflow-x-auto">
+                            <table id="student-equipment-requests-table" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Request ID</th>
+                                        <th class="p-2">Type</th>
+                                        <th class="p-2">Student</th>
+                                        <th class="p-2">Details</th>
+                                        <th class="p-2">Status</th>
+                                        <th class="p-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-equipment-requests-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Lecturer Requests -->
+                    <div id="lecturer-requests" class="hidden">
+                        <h2 class="text-xl font-semibold text-ece-gray mt-6">Lecturer Requests</h2>
+                        <div class="overflow-x-auto">
+                            <table id="lecturer-requests-table" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Request ID</th>
+                                        <th class="p-2">Type</th>
+                                        <th class="p-2">Lecturer</th>
+                                        <th class="p-2">Details</th>
+                                        <th class="p-2">Status</th>
+                                        <th class="p-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lecturer-requests-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functions
+        function showStudentRequests() {
+            document.getElementById('student-requests').classList.remove('hidden');
+            document.getElementById('lecturer-requests').classList.add('hidden');
+        }
+
+        function showLecturerRequests() {
+            document.getElementById('lecturer-requests').classList.remove('hidden');
+            document.getElementById('student-requests').classList.add('hidden');
+        }
+
+        // Main functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Authentication check
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            const userId = localStorage.getItem('userId');
+            const userName = localStorage.getItem('userName');
+
+            console.log('Requests page loaded:', { token: token ? '[Present]' : '[Missing]', role, userId, userName });
+
+            // Set user info in header
+            if (userName) {
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-initial').textContent = userName.charAt(0).toUpperCase();
+            }
+
+            // Redirect if not authenticated or wrong role
+            const normalizedRole = role ? role.trim().toLowerCase() : null;
+            if (!token || normalizedRole !== 'faculty-admin') {
+                console.warn('Unauthorized access, redirecting to login:', { token: token ? '[Present]' : '[Missing]', role });
+                localStorage.clear();
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // DOM elements
+            const lecturerRequestsBody = document.getElementById('lecturer-requests-body');
+            const studentLabRequestsBody = document.getElementById('student-lab-requests-body');
+            const studentEquipmentRequestsBody = document.getElementById('student-equipment-requests-body');
+            const listBtn = document.getElementById('list-btn');
+            const listDropdown = document.getElementById('list-dropdown');
+            const logoutBtn = document.querySelector('[href="/login.html"]');
+
+            // Data storage
+            let lecturerRequests = [];
+            let studentRequests = [];
+
+            // Event listeners
+            listBtn.addEventListener('click', () => {
+                console.log('Toggling dropdown');
+                listDropdown.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!listBtn.contains(e.target) && !listDropdown.contains(e.target)) {
+                    console.log('Closing dropdown');
+                    listDropdown.classList.add('hidden');
+                }
+            });
+
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Logging out');
+                localStorage.clear();
+                window.location.href = '/login.html';
+            });
+
+            // Fetch all requests
+            const fetchRequests = async () => {
+                try {
+                    console.log('Fetching requests from /api/requests');
+                    const response = await fetch('/api/requests', {
+                        headers: { 
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+
+                    console.log('Fetch response:', {
+                        status: response.status,
+                        ok: response.ok,
+                        dataLength: data.length,
+                        sample: data[0]
+                    });
+
+                    if (response.ok) {
+                        // Separate lecturer and student requests
+                        lecturerRequests = data.filter(request => request.user_type === 'lecturer');
+                        studentRequests = data.filter(request => request.user_type === 'student');
+                        
+                        // Filter student requests into lab and equipment requests
+                        const labRequests = studentRequests.filter(req => req.type === 'Lab Booking');
+                        const equipmentRequests = studentRequests.filter(req => req.type === 'Equipment Booking');
+                        
+                        console.log('Filtered requests:', {
+                            lecturerCount: lecturerRequests.length,
+                            studentCount: studentRequests.length,
+                            labCount: labRequests.length,
+                            equipmentCount: equipmentRequests.length
+                        });
+
+                        // Render all tables
+                        renderRequests(lecturerRequests, lecturerRequestsBody);
+                        renderRequests(labRequests, studentLabRequestsBody);
+                        renderRequests(equipmentRequests, studentEquipmentRequestsBody);
+                    } else {
+                        throw new Error(data.message || 'Failed to fetch requests');
+                    }
+                } catch (err) {
+                    console.error('Error fetching requests:', {
+                        message: err.message,
+                        stack: err.stack
+                    });
+                    alert(`Error: ${err.message}`);
+                    if (err.message.includes('Unauthorized')) {
+                        console.warn('Unauthorized, redirecting to login');
+                        localStorage.clear();
+                        window.location.href = '/login.html';
+                    }
+                }
+            };
+
+            // Render requests to a table
+            const renderRequests = (requests, tableBody) => {
+                console.log('Rendering requests:', {
+                    table: tableBody.id,
+                    count: requests.length,
+                    sample: requests[0]
+                });
+
+                tableBody.innerHTML = '';
+                
+                if (requests.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="6" class="p-4 text-center text-gray-500">No requests found</td>`;
+                    tableBody.appendChild(row);
+                    return;
+                }
+
+                requests.forEach(request => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="p-3 border">${request.request_id}</td>
+                        <td class="p-3 border">${request.type}</td>
+                        <td class="p-3 border">${request.requested_by_name} (${request.requested_by_id})</td>
+                        <td class="p-3 border max-w-xs truncate">${request.details}</td>
+                        <td class="p-3 border">
+                            <span class="px-2 py-1 rounded text-xs ${
+                                request.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                request.status === 'Approved' || request.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                                'bg-red-100 text-red-800'
+                            }">${request.status}</span>
+                        </td>
+                        <td class="p-3 border">
+                            ${request.status === 'Pending' ? `
+                                <button class="approve-btn px-2 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600 mr-1" 
+                                        data-id="${request.request_id}">
+                                    Approve
+                                </button>
+                                <button class="reject-btn px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600" 
+                                        data-id="${request.request_id}">
+                                    Reject
+                                </button>
+                            ` : ''}
+                            <button class="view-btn px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600" 
+                                    data-id="${request.request_id}">
+                                View
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+
+                    // Add event listeners to action buttons
+                    const approveBtn = row.querySelector('.approve-btn');
+                    const rejectBtn = row.querySelector('.reject-btn');
+                    const viewBtn = row.querySelector('.view-btn');
+
+                    if (approveBtn) {
+                        approveBtn.addEventListener('click', (e) => handleRequestAction(e, 'approve'));
+                    }
+                    if (rejectBtn) {
+                        rejectBtn.addEventListener('click', (e) => handleRequestAction(e, 'reject'));
+                    }
+                    if (viewBtn) {
+                        viewBtn.addEventListener('click', (e) => viewRequestDetails(e));
+                    }
+                });
+            };
+
+            // Handle approve/reject actions
+            const handleRequestAction = async (e, action) => {
+                e.stopPropagation();
+                const requestId = e.target.dataset.id;
+                
+                console.log(`Attempting to ${action} request:`, { requestId });
+
+                if (!confirm(`Are you sure you want to ${action} this request?`)) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/requests/${requestId}/${action}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    console.log(`${action} response:`, {
+                        status: response.status,
+                        ok: response.ok,
+                        data
+                    });
+
+                    if (response.ok) {
+                        alert(`Request ${action}d successfully!`);
+                        fetchRequests(); // Refresh the list
+                    } else {
+                        throw new Error(data.message || `Failed to ${action} request`);
+                    }
+                } catch (err) {
+                    console.error(`Error ${action}ing request:`, {
+                        message: err.message,
+                        stack: err.stack
+                    });
+                    alert(`Error: ${err.message}`);
+                }
+            };
+
+            // View request details
+            const viewRequestDetails = (e) => {
+                e.stopPropagation();
+                const requestId = e.target.dataset.id;
+                
+                console.log('Viewing request details:', { requestId });
+
+                // Find the request in our stored data
+                const allRequests = [...lecturerRequests, ...studentRequests];
+                const request = allRequests.find(req => req.request_id === requestId);
+                
+                if (!request) {
+                    alert('Request details not found');
+                    return;
+                }
+
+                // Create modal with request details
+                const modalHtml = `
+                    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold">Request Details</h3>
+                                <button class="close-modal text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-semibold">Request ID:</h4>
+                                    <p>${request.request_id}</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold">Type:</h4>
+                                    <p>${request.type}</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold">Requested By:</h4>
+                                    <p>${request.requested_by_name} (${request.requested_by_id})</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold">Status:</h4>
+                                    <p class="${request.status === 'Approved' || request.status === 'Accepted' ? 'text-green-600' : 
+                                              request.status === 'Rejected' ? 'text-red-600' : 
+                                              'text-yellow-600'}">
+                                        ${request.status}
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold">Submitted On:</h4>
+                                    <p>${new Date(request.created_at).toLocaleString()}</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold">Details:</h4>
+                                    <p class="whitespace-pre-wrap">${request.details}</p>
+                                </div>
+                                
+                                ${request.notes ? `
+                                <div>
+                                    <h4 class="font-semibold">Admin Notes:</h4>
+                                    <p class="whitespace-pre-wrap">${request.notes}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add modal to DOM
+                const modalContainer = document.createElement('div');
+                modalContainer.innerHTML = modalHtml;
+                document.body.appendChild(modalContainer);
+                
+                // Add close event
+                modalContainer.querySelector('.close-modal').addEventListener('click', () => {
+                    console.log('Closing request details modal');
+                    document.body.removeChild(modalContainer);
+                });
+            };
+
+            // Initialize the page
+            console.log('Initializing requests page');
+            fetchRequests();
+        });
+    </script>
+</body>
+</html>

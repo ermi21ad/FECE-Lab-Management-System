@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Admin - Equipment Management</title>
+        <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/styles/global.css">
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0">
+            <div class="p-4">
+                <img src="/assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="user-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-users"></i><span>User Management</span></a></li>
+                        <li><a href="lab-schedule.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedules</span></a></li>
+                        <li><a href="equipment-management.html" class="block p-2 bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></a></li>
+                        <li><a href="requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-inbox"></i><span>Requests</span></a></li> <li><a href="reporting-analytics.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-chart-bar"></i><span>Reporting & Analytics</span></a></li>
+                        <li><a href="audit-logs.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-file-alt"></i><span>Audit Logs</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white text-lg font-bold">U</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">User Name</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-bars"></i><span>List</span>
+                    </button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="/login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto flex">
+                <!-- Filter Panel (Collapsible) -->
+                <div id="filter-panel" class="w-64 bg-gray-100 p-4 rounded-lg shadow mr-6 hidden">
+                    <h3 class="text-lg font-semibold text-ece-gray mb-4 flex items-center space-x-2"><i class="fas fa-filter"></i><span>Filters</span></h3>
+                    <div class="space-y-4">
+                        <div><label class="block text-sm text-gray-700">Equipment Name</label><input type="text" class="mt-1 w-full p-2 border rounded-md"></div>
+                        <div><label class="block text-sm text-gray-700">Assigned Lab</label><select class="mt-1 w-full p-2 border rounded-md"><option>All Labs</option><option>Lab 101</option><option>Lab 102</option></select></div>
+                        <div><label class="block text-sm text-gray-700">Category</label><select class="mt-1 w-full p-2 border rounded-md"><option>All</option><option>Measurement Tool</option><option>PC</option><option>Microcontroller</option></select></div>
+                        <div><label class="block text-sm text-gray-700">Status</label><div class="mt-1 space-y-2"><label class="flex items-center"><input type="checkbox" class="mr-2">Available</label><label class="flex items-center"><input type="checkbox" class="mr-2">In Use</label><label class="flex items-center"><input type="checkbox" class="mr-2">Under Maintenance</label><label class="flex items-center"><input type="checkbox" class="mr-2">Lost</label></div></div>
+                        <div><label class="block text-sm text-gray-700">Condition</label><select class="mt-1 w-full p-2 border rounded-md"><option>All</option><option>New</option><option>Good</option><option>Worn</option><option>Needs Repair</option></select></div>
+                        <div><label class="block text-sm text-gray-700">Date Range</label><input type="date" class="mt-1 w-full p-2 border rounded-md"></div>
+                    </div>
+                </div>
+
+                <!-- Inventory Table & Actions -->
+                <div class="flex-1 bg-gray-100 p-4 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Inventory</span></h2>
+                        <div class="flex space-x-4">
+                            <button id="toggle-filter" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-filter"></i><span>Toggle Filters</span></button>
+                            <a href="/assets/templates/equipment-template.csv" download="equipment-template.csv" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-file-download"></i><span>Bulk Import Template</span></a>
+                            <button id="bulk-import-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-upload"></i><span>Bulk Import</span></button>
+                            <button id="add-equipment-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-plus"></i><span>Add Equipment</span></button>
+                        </div>
+                    </div>
+                    <div class="flex mb-4"><input type="text" id="search-bar" placeholder="Search equipment..." class="w-full p-2 border rounded-md"></div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="p-2"><input type="checkbox" id="select-all"></th>
+                                    <th class="p-2">Equipment ID</th>
+                                    <th class="p-2">Name</th>
+                                    <th class="p-2">Category</th>
+                                    <th class="p-2">Lab</th>
+                                    <th class="p-2">Qty</th>
+                                    <th class="p-2">Status</th>
+                                    <th class="p-2">Condition</th>
+                                    <th class="p-2">Manufacturer</th>
+                                    <th class="p-2">Date Added</th>
+                                    <th class="p-2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2"><input type="checkbox"></td>
+                                    <td class="p-2">EQ/001</td>
+                                    <td class="p-2">Oscilloscope</td>
+                                    <td class="p-2">Measurement Tool</td>
+                                    <td class="p-2">Lab 101</td>
+                                    <td class="p-2">2</td>
+                                    <td class="p-2">In Use</td>
+                                    <td class="p-2">Good</td>
+                                    <td class="p-2">Tektronix</td>
+                                    <td class="p-2">2024-01-15</td>
+                                    <td class="p-2">
+                                        <button class="text-gray-700 hover:text-gray-900 mr-2" title="View"><i class="fas fa-eye"></i></button>
+                                        <button class="text-gray-700 hover:text-gray-900 mr-2" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="text-gray-700 hover:text-gray-900 mr-2" title="Delete"><i class="fas fa-trash"></i></button>
+                                        <button class="text-gray-700 hover:text-gray-900" title="History"><i class="fas fa-history"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <span class="text-gray-700">Showing 1-10 of 50</span>
+                        <div class="space-x-2">
+                            <button class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600">Previous</button>
+                            <button class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Add Equipment Modal -->
+        <div id="add-equipment-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-5 rounded-md w-full max-w-sm">
+                <h3 class="text-base font-medium text-ece-gray mb-3">Add Equipment</h3>
+                <form id="add-equipment-form" class="space-y-2">
+                    <input type="text" name="serial_number" placeholder="Serial Number *" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="name" placeholder="Equipment Name *" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none" required>
+                    <input type="text" name="category" placeholder="Category" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none">
+                    <input type="text" name="assigned_lab" placeholder="Assigned Lab" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none">
+                    <input type="number" name="quantity" placeholder="Quantity" min="1" value="1" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none">
+                    <select name="status" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none bg-transparent">
+                        <option value="Available">Available</option>
+                        <option value="In Use">In Use</option>
+                        <option value="Under Maintenance">Under Maintenance</option>
+                        <option value="Lost">Lost</option>
+                    </select>
+                    <select name="condition" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none bg-transparent">
+                        <option value="New">New</option>
+                        <option value="Good">Good</option>
+                        <option value="Worn">Worn</option>
+                        <option value="Needs Repair">Needs Repair</option>
+                    </select>
+                    <input type="text" name="manufacturer" placeholder="Manufacturer" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none">
+                    <input type="date" name="date_added" placeholder="Date Added" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none">
+                    <input type="file" name="attachment" class="w-full p-2 text-sm text-gray-500">
+                    <textarea name="notes" placeholder="Notes" class="w-full p-2 text-sm border-b border-gray-300 focus:border-gray-500 outline-none resize-none" rows="2"></textarea>
+                    <div class="flex justify-end space-x-2 mt-3">
+                        <button type="button" id="close-modal" class="px-3 py-1 text-sm text-ece-gray hover:text-gray-700">Cancel</button>
+                        <button type="submit" class="px-3 py-1 text-sm bg-gray-500 text-white rounded-sm hover:bg-gray-600">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<!-- Bulk Import Modal - Updated with scrollable content and fixed footer -->
+<div id="bulk-import-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-gray-100 rounded-lg shadow-lg w-full max-w-2xl flex flex-col" style="max-height: 90vh;">
+        <div class="p-6">
+            <h3 class="text-lg font-semibold text-ece-gray mb-4">Bulk Import Equipment</h3>
+            <input type="file" id="bulk-import-file" accept=".csv" class="w-full p-2 border rounded-md mb-4">
+            <div id="import-preview" class="overflow-x-auto hidden" style="max-height: 60vh;">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-200 sticky top-0">
+                        <tr>
+                            <th class="p-2">Serial Number</th>
+                            <th class="p-2">Name</th>
+                            <th class="p-2">Category</th>
+                            <th class="p-2">Lab</th>
+                            <th class="p-2">Qty</th>
+                            <th class="p-2">Status</th>
+                            <th class="p-2">Condition</th>
+                            <th class="p-2">Manufacturer</th>
+                            <th class="p-2">Date Added</th>
+                            <th class="p-2">Notes</th>
+                            <th class="p-2">Errors</th>
+                        </tr>
+                    </thead>
+                    <tbody id="preview-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-300 bg-gray-100 rounded-b-lg">
+            <div class="flex justify-end space-x-2">
+                <button id="close-import-modal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                <button id="confirm-import" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                    <i class="fas fa-check"></i><span>Confirm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/global.js"></script>
+    <script src="/scripts/faculty-admin/equipment-management.js"></script>
+</body>
+</html>

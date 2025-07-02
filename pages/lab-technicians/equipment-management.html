@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Technician - Equipment Management</title>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0 flex flex-col h-screen">
+            <div class="p-4 flex-1">
+                <img src="/assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="equipment-management.html" class="block p-2 bg-blue-500 text-white rounded flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></a></li>
+                        <li><a href="booking-requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-check"></i><span>Lab Booking Requests</span></a></li>
+                        <li><a href="issue-reporting.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-exclamation-triangle"></i><span>Issue Reporting</span></a></li>
+                        <li><a href="profile.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="p-4">
+                <a href="/login.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2">
+                    <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white text-lg font-bold" id="user-initial">T</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">Technician</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-bars"></i><span>List</span>
+                    </button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="/login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h1 class="text-2xl font-bold text-ece-gray flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></h1>
+                        <div class="flex space-x-4">
+                            <input type="text" id="search-bar" placeholder="Search equipment..." class="p-2 border rounded-md">
+                            <button id="filter-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-filter"></i><span>Filter</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Equipment List Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="p-2">Equipment Name</th>
+                                    <th class="p-2">Category</th>
+                                    <th class="p-2">Condition</th>
+                                    <th class="p-2">Quantity</th>
+                                    <th class="p-2">Lab Location</th>
+                                    <th class="p-2">Status</th>
+                                    <th class="p-2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="equipment-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-4 flex justify-between">
+                        <span id="pagination-info" class="text-gray-700">Showing 0-0 of 0</span>
+                        <div class="space-x-2">
+                            <button id="prev-page-btn" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 disabled:bg-gray-300" disabled>Previous</button>
+                            <button id="next-page-btn" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 disabled:bg-gray-300" disabled>Next</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Edit Modal -->
+            <div id="edit-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-full max-w-md">
+                    <h3 class="text-lg font-semibold text-ece-gray mb-4">Edit Equipment</h3>
+                    <form id="edit-form" class="space-y-4">
+                        <input type="hidden" name="equipment_id">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Condition</label>
+                            <select name="condition" class="mt-1 w-full p-2 border rounded-md" required>
+                                <option value="New">New</option>
+                                <option value="Good">Good</option>
+                                <option value="Worn">Worn</option>
+                                <option value="Needs Repair">Needs Repair</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Status</label>
+                            <select name="status" class="mt-1 w-full p-2 border rounded-md" required>
+                                <option value="Available">Available</option>
+                                <option value="In Use">In Use</option>
+                                <option value="Under Maintenance">Under Maintenance</option>
+                                <option value="Lost">Lost</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Lab Location</label>
+                            <input type="text" name="assigned_lab" class="mt-1 w-full p-2 border rounded-md" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Notes</label>
+                            <textarea name="notes" class="mt-1 w-full p-2 border rounded-md" rows="3"></textarea>
+                        </div>
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" id="close-edit-modal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-save"></i><span>Save</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Image Modal -->
+            <div id="image-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-full max-w-md">
+                    <h3 class="text-lg font-semibold text-ece-gray mb-4">Attach Equipment Image</h3>
+                    <input type="file" id="image-upload" name="image" class="mb-4" accept="image/*">
+                    <div class="flex justify-end space-x-2">
+                        <button id="close-image-modal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                        <button id="save-image" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-save"></i><span>Upload</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/lab-technicians/lab-equipment-management.js"></script>
+</body>
+</html>

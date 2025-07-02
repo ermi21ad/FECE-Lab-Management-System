@@ -1,0 +1,23 @@
+{
+  "name": "lab-management-system",
+  "version": "1.0.0",
+  "description": "<!DOCTYPE html>\r <html lang=\"en\">\r <head>\r     <meta charset=\"UTF-8\">\r     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r     <title>Student - Profile</title>\r     <script src=\"https://cdn.tailwindcss.com\"></script>\r     <script src=\"https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js\"></script>\r     <script>\r         tailwind.config = { theme: { extend: { colors: { 'ece-gray': '#4B5563' } } } }\r     </script>\r     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css\">\r     <link rel=\"stylesheet\" href=\"../../styles/global.css\">\r </head>\r <body class=\"bg-gray-200 font-sans\">\r     <div class=\"flex h-screen\">\r         <aside class=\"w-64 bg-gray-300 text-ece-gray flex-shrink-0 flex flex-col h-screen\">\r             <div class=\"p-4 flex-1\">\r                 <img src=\"../../assets/images/logo.png\" alt=\"ECE Logo\" class=\"h-12 mb-6\">\r                 <nav>\r                     <ul class=\"space-y-2\">\r                         <li><a href=\"dashboard.html\" class=\"block p-2 bg-blue-500 text-white rounded flex items-center space-x-2\"><i class=\"fas fa-tachometer-alt\"></i><span>Dashboard</span></a></li>\r                         <li><a href=\"lab-schedule.html\" class=\"block p-2 hover:bg-gray-400 rounded flex items-center space-x-2\"><i class=\"fas fa-calendar-alt\"></i><span>Lab Schedule</span></a></li>\r                         <li><a href=\"assignments.html\" class=\"block p-2 hover:bg-gray-400 rounded flex items-center space-x-2\"><i class=\"fas fa-tasks\"></i><span>Assignments</span></a></li>\r                         <li><a href=\"lab-equipment-booking.html\" class=\"block p-2 hover:bg-gray-400 rounded flex items-center space-x-2\"><i class=\"fas fa-flask\"></i><span>Lab & Equipment Booking</span></a></li>\r                         <li><a href=\"resources.html\" class=\"block p-2 hover:bg-gray-400 rounded flex items-center space-x-2\"><i class=\"fas fa-book\"></i><span>Resources</span></a></li>\r                         <li><a href=\"profile.html\" class=\"block p-2 hover:bg-gray-400 rounded flex items-center space-x-2\"><i class=\"fas fa-user\"></i><span>Profile</span></a></li>\r                     </ul>\r                 </nav>\r             </div>\r             <div class=\"p-4\">\r                 <a href=\"../../login.html\" class=\"block p-2 hover:bg-gray-400 rounded flex items-center space-x-2\"><i class=\"fas fa-sign-out-alt\"></i><span>Logout</span></a>\r             </div>\r         </aside>",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.7"
+  }
+}

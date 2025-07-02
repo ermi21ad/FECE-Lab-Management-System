@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Admin - Login Audit Logs</title>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0">
+            <div class="p-4">
+                <img src="../../assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                   <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="user-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-users"></i><span>User Management</span></a></li>
+                        <li><a href="lab-schedule.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedules</span></a></li>
+                        <li><a href="resource-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-box"></i><span>Resource Management</span></a></li>
+                        <li><a href="equipment-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></a></li>
+                        <li><a href="requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-inbox"></i><span>Requests</span></a></li>
+                        <li><a href="issue-reports.html" class="block p-2 bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-exclamation-triangle"></i><span>Issue Reports</span></a></li>
+                        <li><a href="reporting-analytics.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-chart-bar"></i><span>Reporting & Analytics</span></a></li>
+                        <li><a href="audit-logs.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-file-alt"></i><span>Audit Logs</span></a></li>
+                    </ul>>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-ece-gray">Faculty Admin - Login Audit Logs</h1>
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-700">Admin: Ermias</span>
+                    <a href="../../login.html" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-sign-in-alt"></i><span>Login Audit Logs</span></h2>
+                        <div class="flex space-x-4">
+                            <div class="flex space-x-2">
+                                <input type="date" id="start-date" class="p-2 border rounded-md">
+                                <input type="date" id="end-date" class="p-2 border rounded-md">
+                            </div>
+                            <select id="user-type" class="p-2 border rounded-md">
+                                <option value="all">All User Types</option>
+                                <option value="student">Students</option>
+                                <option value="lecturer">Lecturers</option>
+                                <option value="technician">Lab Technicians</option>
+                                <option value="admin">Admins</option>
+                            </select>
+                            <input type="text" id="search-bar" placeholder="Search users..." class="p-2 border rounded-md">
+                            <button id="filter-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-filter"></i><span>Filter</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Login Logs Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left" id="login-logs-table">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="p-2">Log ID</th>
+                                    <th class="p-2">User</th>
+                                    <th class="p-2">Role</th>
+                                    <th class="p-2">Login Time</th>
+                                    <th class="p-2">Logout Time</th>
+                                    <th class="p-2">IP Address</th>
+                                    <th class="p-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-body">
+                                <!-- Logs will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-gray-700" id="showing-text">Showing 1-10 of 50</span>
+                        <div class="space-x-2">
+                            <button id="prev-btn" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600">Previous</button>
+                            <button id="next-btn" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Mock login audit data
+        const loginAuditData = [
+            { id: 'LOG001', userId: 'STU001', name: 'John Doe', role: 'Student', loginTime: '2025-04-10 08:15:23', logoutTime: '2025-04-10 10:30:45', ip: '192.168.1.101', status: 'Success' },
+            { id: 'LOG002', userId: 'LEC001', name: 'Dr. Williams', role: 'Lecturer', loginTime: '2025-04-10 08:30:12', logoutTime: '2025-04-10 16:45:22', ip: '192.168.1.105', status: 'Success' },
+            { id: 'LOG003', userId: 'TEC001', name: 'Mike Brown', role: 'Lab Technician', loginTime: '2025-04-10 07:45:33', logoutTime: '2025-04-10 15:20:18', ip: '192.168.1.110', status: 'Success' },
+            { id: 'LOG004', userId: 'ADM001', name: 'Ermias', role: 'Admin', loginTime: '2025-04-10 08:00:05', logoutTime: '2025-04-10 17:30:00', ip: '192.168.1.100', status: 'Success' },
+            { id: 'LOG005', userId: 'STU002', name: 'Jane Smith', role: 'Student', loginTime: '2025-04-09 09:20:41', logoutTime: '2025-04-09 11:45:30', ip: '192.168.1.102', status: 'Success' },
+            { id: 'LOG006', userId: 'STU003', name: 'Alex Chen', role: 'Student', loginTime: '2025-04-09 10:05:15', logoutTime: null, ip: '192.168.1.103', status: 'Failed - Wrong Password' },
+            { id: 'LOG007', userId: 'LEC002', name: 'Prof. Johnson', role: 'Lecturer', loginTime: '2025-04-08 08:25:50', logoutTime: '2025-04-08 17:10:33', ip: '192.168.1.106', status: 'Success' },
+            { id: 'LOG008', userId: 'TEC002', name: 'Sarah Lee', role: 'Lab Technician', loginTime: '2025-04-08 07:30:22', logoutTime: '2025-04-08 16:00:45', ip: '192.168.1.111', status: 'Success' },
+            { id: 'LOG009', userId: 'STU004', name: 'Emily Wilson', role: 'Student', loginTime: '2025-04-07 13:15:08', logoutTime: '2025-04-07 15:30:20', ip: '192.168.1.104', status: 'Success' },
+            { id: 'LOG010', userId: 'LEC003', name: 'Dr. Martinez', role: 'Lecturer', loginTime: '2025-04-07 09:10:35', logoutTime: null, ip: '192.168.1.107', status: 'Failed - Account Locked' }
+        ];
+
+        // Pagination variables
+        let currentPage = 1;
+        const logsPerPage = 5;
+        let filteredData = [...loginAuditData];
+
+        // DOM elements
+        const logsBody = document.getElementById('logs-body');
+        const showingText = document.getElementById('showing-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const filterBtn = document.getElementById('filter-btn');
+        const userTypeSelect = document.getElementById('user-type');
+        const searchBar = document.getElementById('search-bar');
+        const startDate = document.getElementById('start-date');
+        const endDate = document.getElementById('end-date');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates
+            const today = new Date().toISOString().split('T')[0];
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            startDate.value = oneWeekAgo.toISOString().split('T')[0];
+            endDate.value = today;
+            
+            renderTable();
+            updatePagination();
+        });
+
+        // Render the table with current page data
+        function renderTable() {
+            logsBody.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * logsPerPage;
+            const endIndex = startIndex + logsPerPage;
+            const paginatedData = filteredData.slice(startIndex, endIndex);
+            
+            if (paginatedData.length === 0) {
+                logsBody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-gray-500">No login records found</td></tr>';
+                return;
+            }
+            
+            paginatedData.forEach(log => {
+                const row = document.createElement('tr');
+                row.className = 'bg-white hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="p-2">${log.id}</td>
+                    <td class="p-2">${log.userId} (${log.name})</td>
+                    <td class="p-2">${log.role}</td>
+                    <td class="p-2">${log.loginTime || 'N/A'}</td>
+                    <td class="p-2">${log.logoutTime || 'Still logged in'}</td>
+                    <td class="p-2">${log.ip}</td>
+                    <td class="p-2"><span class="px-2 py-1 rounded text-xs ${log.status.includes('Success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${log.status}</span></td>
+                `;
+                logsBody.appendChild(row);
+            });
+        }
+
+        // Update pagination controls
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredData.length / logsPerPage);
+            const startItem = (currentPage - 1) * logsPerPage + 1;
+            const endItem = Math.min(currentPage * logsPerPage, filteredData.length);
+            
+            showingText.textContent = `Showing ${startItem}-${endItem} of ${filteredData.length}`;
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+        // Filter data based on user selections
+        function filterData() {
+            const userType = userTypeSelect.value;
+            const searchTerm = searchBar.value.toLowerCase();
+            const startDateVal = startDate.value;
+            const endDateVal = endDate.value;
+            
+            filteredData = loginAuditData.filter(log => {
+                // Filter by user type
+                if (userType !== 'all') {
+                    const roleLower = log.role.toLowerCase();
+                    if (!roleLower.includes(userType)) return false;
+                }
+                
+                // Filter by search term
+               if (searchTerm && !(
+    log.userId.toLowerCase().includes(searchTerm) ||
+    log.name.toLowerCase().includes(searchTerm) ||
+    log.role.toLowerCase().includes(searchTerm) ||
+    log.status.toLowerCase().includes(searchTerm) ||
+    log.ip.includes(searchTerm)
+)) {
+    return false;
+}
+                
+                // Filter by date range
+                if (startDateVal || endDateVal) {
+                    const logDate = log.loginTime.split(' ')[0];
+                    if (startDateVal && logDate < startDateVal) return false;
+                    if (endDateVal && logDate > endDateVal) return false;
+                }
+                
+                return true;
+            });
+            
+            currentPage = 1;
+            renderTable();
+            updatePagination();
+        }
+
+        // Event listeners
+        filterBtn.addEventListener('click', filterData);
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+                updatePagination();
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < Math.ceil(filteredData.length / logsPerPage)) {
+                currentPage++;
+                renderTable();
+                updatePagination();
+            }
+        });
+        
+        // Allow Enter key to trigger filter
+        searchBar.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                filterData();
+            }
+        });
+    </script>
+</body>
+</html>

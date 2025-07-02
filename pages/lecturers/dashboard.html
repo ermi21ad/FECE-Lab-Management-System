@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer - Dashboard</title>
+<link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0 flex flex-col h-screen">
+            <div class="p-4 flex-1">
+                <img src="../../assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                   <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="block p-2 bg-blue-500 text-white rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li><a href="lab-schedule-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedule</span></a></li>
+                    <li><a href="assignment-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tasks"></i><span>Assignments</span></a></li>
+                    <li><a href="resource-requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-box"></i><span>Resource Requests</span></a></li>
+                    <li><a href="profile.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li><a href="qr-attendance.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-qrcode"></i><span>QR Attendance</span></a></li>
+                </ul>
+                </nav>
+            </div>
+            <div class="p-4">
+                <a href="../../login.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2">
+                    <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-bold">L</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">Lecturer Abebe</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-bars"></i><span>List</span>
+                    </button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="../../login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <h1 class="text-2xl font-bold text-ece-gray mb-6 flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></h1>
+
+                    <!-- Summary Widgets -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h3 class="text-md font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-calendar-day"></i><span>Today's Labs</span></h3>
+                            <p class="text-2xl text-gray-700">2</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h3 class="text-md font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-pen"></i><span>Pending Grading</span></h3>
+                            <p class="text-2xl text-yellow-600">5</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h3 class="text-md font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-envelope"></i><span>Messages</span></h3>
+                            <p class="text-2xl text-blue-600">3</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h3 class="text-md font-semibold text-ece-gray flex items-center space-x-2"><i class="fas fa-box"></i><span>Resource Status</span></h3>
+                            <p class="text-2xl text-green-600">Approved</p>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Lab Sessions -->
+                    <div class="mb-6">
+                        <h2 class="text-lg font-semibold text-ece-gray mb-4 flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Upcoming Lab Sessions</span></h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Course</th>
+                                        <th class="p-2">Batch</th>
+                                        <th class="p-2">Date & Time</th>
+                                        <th class="p-2">Lab</th>
+                                        <th class="p-2">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-blue-100">
+                                        <td class="p-2">Circuit Analysis (ECE-201)</td>
+                                        <td class="p-2">Batch A</td>
+                                        <td class="p-2">2025-04-12 10:00 - 12:00</td>
+                                        <td class="p-2">Lab A</td>
+                                        <td class="p-2 text-green-600">Confirmed</td>
+                                    </tr>
+                                    <tr class="bg-green-100">
+                                        <td class="p-2">Digital Systems (ECE-202)</td>
+                                        <td class="p-2">Batch B</td>
+                                        <td class="p-2">2025-04-13 14:00 - 16:00</td>
+                                        <td class="p-2">Lab B</td>
+                                        <td class="p-2 text-yellow-600">Pending Prep</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Submissions -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-ece-gray mb-4 flex items-center space-x-2"><i class="fas fa-file-upload"></i><span>Recent Submissions</span></h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Assignment</th>
+                                        <th class="p-2">Student</th>
+                                        <th class="p-2">Submitted On</th>
+                                        <th class="p-2">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2">Lab Report 1</td>
+                                        <td class="p-2">Student B</td>
+                                        <td class="p-2">2025-04-11 15:00</td>
+                                        <td class="p-2 text-yellow-600">Pending Review</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Lab Code</td>
+                                        <td class="p-2">Student C</td>
+                                        <td class="p-2">2025-04-10 09:30</td>
+                                        <td class="p-2 text-green-600">Graded</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../../scripts/lecturer/dashboard.js"></script>
+</body>
+</html>

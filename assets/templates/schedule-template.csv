@@ -1,0 +1,3 @@
+course_id,lecturer_id,lab_id,batch_id,schedule_date,start_time,end_time,equipment_ids,notes,status
+CRS/001,LEC/001,LAB/101,BAT/001,2025-05-01,09:00,11:00,EQ/001,Basic circuit lab,Scheduled
+CRS/002,LEC/002,LAB/102,BAT/002,2025-05-02,14:00,16:00,EQ/002,DSP experiment,Pending

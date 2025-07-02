@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ECE Lab Management</title>
+    <link href="src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+</head>
+<body class="bg-gray-200 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <!-- Back button (same as original) -->
+        <div class="flex justify-between mb-6">
+            <a href="index.html" class="text-ece-gray hover:text-gray-800 transition-colors flex items-center space-x-2">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+
+        <!-- Logo section (same height as original) -->
+        <div class="flex justify-center mb-6">
+            <div class="bg-gray-100 p-3 rounded-full">
+                <img src="/assets/images/logo.png" alt="ECE Logo" class="h-12">
+            </div>
+        </div>
+
+        <!-- Title section (compact version) -->
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800">ECE Lab Management</h2>
+            <p class="text-ece-gray text-sm mt-1">Sign in to continue</p>
+        </div>
+
+        <!-- Compact form layout -->
+        <form id="login-form" class="space-y-4">
+            <div class="space-y-1">
+                <label for="id_number" class="block text-sm font-medium text-gray-700">ID Number</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-user text-gray-400 text-sm"></i>
+                    </div>
+                    <input type="text" id="id_number" name="id_number" class="pl-8 w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none text-sm" required>
+                </div>
+            </div>
+            
+            <div class="space-y-1">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400 text-sm"></i>
+                    </div>
+                    <input type="password" id="password" name="password" class="pl-8 w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none text-sm" required>
+                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" id="togglePassword">
+                        <i class="fas fa-eye text-gray-400 hover:text-ece-gray text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm">
+                <div class="flex items-center">
+                    <input id="remember-me" name="remember-me" type="checkbox" class="h-3 w-3 text-gray-600 focus:ring-gray-500 border-gray-300 rounded">
+                    <label for="remember-me" class="ml-2 text-gray-700">Remember me</label>
+                </div>
+                <a href="forgot.html" class="text-ece-gray hover:text-gray-800 hover:underline">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md font-medium text-sm flex items-center justify-center space-x-2">
+                <i class="fas fa-sign-in-alt text-xs"></i>
+                <span>Login</span>
+            </button>
+        </form>
+
+        <div class="mt-4 text-center text-sm text-ece-gray">
+            Need access? <a href="contact-admin.html" class="text-ece-gray hover:text-gray-800 hover:underline">Contact admin</a>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+    </script>
+    <script src="/scripts/login.js"></script>
+</body>
+</html>

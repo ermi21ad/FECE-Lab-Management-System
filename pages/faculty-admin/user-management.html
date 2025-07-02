@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Admin - User Management</title>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+</head>
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0">
+            <div class="p-4">
+                <img src="/assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="user-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-users"></i><span>User Management</span></a></li>
+                        <li><a href="lab-schedule.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedules</span></a></li>
+                        <li><a href="resource-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-box"></i><span>Resource Management</span></a></li>
+                        <li><a href="equipment-management.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Management</span></a></li>
+                        <li><a href="requests.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-inbox"></i><span>Requests</span></a></li>
+                        <li><a href="issue-reports.html" class="block p-2 bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-exclamation-triangle"></i><span>Issue Reports</span></a></li>
+                        <li><a href="reporting-analytics.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-chart-bar"></i><span>Reporting & Analytics</span></a></li>
+                        <li><a href="audit-logs.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-file-alt"></i><span>Audit Logs</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white text-lg font-bold">U</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">User Name</span>
+                </div>
+                <div class="relative">
+                    <button id="list-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-bars"></i><span>List</span>
+                    </button>
+                    <div id="list-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg hidden">
+                        <a href="profile.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a href="/login.html" class="block px-4 py-2 text-ece-gray hover:bg-gray-200 flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold text-ece-gray mb-4 flex items-center space-x-2"><i class="fas fa-users"></i><span>User Management</span></h2>
+                    
+                    <!-- Tabs -->
+                    <div class="flex border-b mb-4">
+                        <button id="individual-tab" class="px-4 py-2 text-ece-gray border-b-2 border-gray-500 focus:outline-none">Individual Registration</button>
+                        <button id="bulk-tab" class="px-4 py-2 text-ece-gray focus:outline-none">Bulk Registration</button>
+                        <button id="users-tab" class="px-4 py-2 text-ece-gray focus:outline-none">Registered Users</button>
+                    </div>
+
+                    <!-- Individual Registration -->
+                    <div id="individual-content" class="space-y-6">
+                        <div class="flex space-x-4 mb-4">
+                            <select id="role-select" class="border rounded p-2 text-gray-700">
+                                <option value="lab-technician">Lab Technician</option>
+                                <option value="lecturer">Lecturer</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+
+                        <!-- Lab Technician Form -->
+                        <form id="lab-technician-form" class="space-y-4 hidden">
+                            <div><label class="block text-sm font-medium text-gray-700">Full Name</label><input type="text" name="full_name" class="mt-1 w-full p-2 border rounded-md" required></div>
+                            <div><label class="block text-sm font-medium text-gray-700">ID Number</label><input type="text" name="id_number" class="mt-1 w-full p-2 border rounded-md" required></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Email Address</label><input type="email" name="email" class="mt-1 w-full p-2 border rounded-md"></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Assigned Laboratory</label><input type="text" name="assigned_lab_id" class="mt-1 w-full p-2 border rounded-md"></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Temporary Password</label><input type="text" name="password" class="mt-1 w-full p-2 border rounded-md" value="temp123"></div>
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-user-plus"></i><span>Register Technician</span></button>
+                        </form>
+
+                        <!-- Lecturer Form -->
+                        <form id="lecturer-form" class="space-y-4 hidden">
+                            <div><label class="block text-sm font-medium text-gray-700">Full Name</label><input type="text" name="full_name" class="mt-1 w-full p-2 border rounded-md" required></div>
+                            <div><label class="block text-sm font-medium text-gray-700">ID Number</label><input type="text" name="id_number" class="mt-1 w-full p-2 border rounded-md" required></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Email Address</label><input type="email" name="email" class="mt-1 w-full p-2 border rounded-md"></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Courses Assigned</label><input type="text" name="courses_assigned" class="mt-1 w-full p-2 border rounded-md" placeholder="e.g., Circuits, DSP"></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Temporary Password</label><input type="text" name="password" class="mt-1 w-full p-2 border rounded-md" value="temp123"></div>
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-user-plus"></i><span>Register Lecturer</span></button>
+                        </form>
+
+                        <!-- Student Form -->
+                        <form id="student-form" class="space-y-4">
+                            <div><label class="block text-sm font-medium text-gray-700">Full Name</label><input type="text" name="full_name" class="mt-1 w-full p-2 border rounded-md" required></div>
+                            <div><label class="block text-sm font-medium text-gray-700">ID Number</label><input type="text" name="id_number" class="mt-1 w-full p-2 border rounded-md" required></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Email Address</label><input type="email" name="email" class="mt-1 w-full p-2 border rounded-md"></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Batch</label><input type="text" name="batch" class="mt-1 w-full p-2 border rounded-md" placeholder="e.g., 13"></div>
+                            <div><label class="block text-sm font-medium text-gray-700">Temporary Password</label><input type="text" name="password" class="mt-1 w-full p-2 border rounded-md" value="temp123"></div>
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-user-plus"></i><span>Register Student</span></button>
+                        </form>
+                    </div>
+
+                    <!-- Bulk Registration -->
+                    <div id="bulk-content" class="space-y-6 hidden">
+                        <div class="flex flex-col space-y-2 mb-4">
+                            <div class="flex space-x-4">
+                                <a href="/assets/templates/technician-template.csv" download class="text-gray-700 underline flex items-center space-x-2"><i class="fas fa-file-download"></i><span>Lab Technician Template</span></a>
+                                <a href="/assets/templates/lecturer-template.csv" download class="text-gray-700 underline flex items-center space-x-2"><i class="fas fa-file-download"></i><span>Lecturer Template</span></a>
+                                <a href="/assets/templates/student-template.csv" download class="text-gray-700 underline flex items-center space-x-2"><i class="fas fa-file-download"></i><span>Student Template</span></a>
+                            </div>
+                            <div class="flex space-x-4">
+                                <input type="file" id="csv-upload" accept=".csv" class="border rounded p-2 text-gray-700">
+                                <button id="upload-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-upload"></i><span>Upload CSV</span></button>
+                            </div>
+                        </div>
+                        <div id="preview-table" class="overflow-x-auto hidden">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Full Name</th>
+                                        <th class="p-2">ID Number</th>
+                                        <th class="p-2">Email</th>
+                                        <th class="p-2">Role</th>
+                                        <th class="p-2">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <button id="confirm-import" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-check"></i><span>Confirm Import</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Registered Users -->
+                    <div id="users-content" class="space-y-6 hidden">
+                        <h3 class="text-lg font-semibold text-ece-gray">Registered Students</h3>
+                        <div class="overflow-x-auto">
+                            <table id="students-table" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">ID Number</th>
+                                        <th class="p-2">Full Name</th>
+                                        <th class="p-2">Email</th>
+                                        <th class="p-2">Batch</th>
+                                        <th class="p-2">Created At</th>
+                                        <th class="p-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-semibold text-ece-gray mt-6">Registered Lab Technicians</h3>
+                        <div class="overflow-x-auto">
+                            <table id="technicians-table" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">ID Number</th>
+                                        <th class="p-2">Full Name</th>
+                                        <th class="p-2">Email</th>
+                                        <th class="p-2">Assigned Lab</th>
+                                        <th class="p-2">Created At</th>
+                                        <th class="p-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-semibold text-ece-gray mt-6">Registered Lecturers</h3>
+                        <div class="overflow-x-auto">
+                            <table id="lecturers-table" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">ID Number</th>
+                                        <th class="p-2">Full Name</th>
+                                        <th class="p-2">Email</th>
+                                        <th class="p-2">Assigned Courses</th>
+                                        <th class="p-2">Created At</th>
+                                        <th class="p-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Edit Modal -->
+                    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                        <div class="bg-gray-100 p-6 rounded-lg w-full max-w-md">
+                            <h3 class="text-lg font-semibold text-ece-gray mb-4">Edit User</h3>
+                            <form id="edit-form" class="space-y-4">
+                                <input type="hidden" name="role">
+                                <input type="hidden" name="id_number">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                                    <input type="text" name="full_name" class="mt-1 w-full p-2 border rounded-md">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                                    <input type="email" name="email" class="mt-1 w-full p-2 border rounded-md">
+                                </div>
+                                <div id="extra-field"></div>
+                                <div class="flex justify-end space-x-2">
+                                    <button type="button" id="cancel-edit" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                                    <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/scripts/faculty-admin/user-management.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student - Lab & Equipment Booking</title>
+<link href="/src/output.css" rel="stylesheet">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../../styles/global.css">
+</head>
+
+<body class="bg-gray-200 font-sans">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-300 text-ece-gray flex-shrink-0 flex flex-col h-screen">
+            <div class="p-4 flex-1">
+                <img src="../../assets/images/logo.png" alt="ECE Logo" class="h-12 mb-6">
+                <nav>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="lab-schedule.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Lab Schedule</span></a></li>
+                        <li><a href="assignments.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-tasks"></i><span>Assignments</span></a></li>
+                        <li><a href="lab-equipment-booking.html" class="block p-2 bg-blue-500 text-white rounded flex items-center space-x-2"><i class="fas fa-flask"></i><span>Lab & Equipment Booking</span></a></li>
+                        <li><a href="resources.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-book"></i><span>Resources</span></a></li>
+                        <li><a href="profile.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="p-4">
+                <a href="../../login.html" class="block p-2 hover:bg-gray-400 rounded flex items-center space-x-2"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col">
+            <header class="bg-gray-100 shadow p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-bold" id="user-initial">S</div>
+                    <span class="text-ece-gray text-lg font-semibold" id="user-name">Student</span>
+                </div>
+            </header>
+
+            <main class="p-6 flex-1 overflow-y-auto">
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <h1 class="text-2xl font-bold text-ece-gray mb-6 flex items-center space-x-2"><i class="fas fa-flask"></i><span>Lab & Equipment Booking</span></h1>
+
+                    <div class="flex space-x-4 mb-6">
+                        <button id="show-lab-booking" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Lab Booking</button>
+                        <button id="show-equipment-booking" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Equipment Booking</button>
+                    </div>
+
+                    <!-- Lab Booking Section -->
+                    <div id="lab-booking-section" class="hidden">
+                        <h2 class="text-lg font-semibold text-ece-gray mb-4 flex items-center space-x-2"><i class="fas fa-door-open"></i><span>Lab Booking</span></h2>
+                        <button id="new-lab-booking-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mb-4 flex items-center space-x-2"><i class="fas fa-plus"></i><span>New Lab Booking</span></button>
+                        <div class="bg-white p-4 rounded-lg">
+                            <h3 class="text-md font-semibold text-ece-gray mb-2">Booking History</h3>
+                            <table id="lab-booking-history" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Purpose</th>
+                                        <th class="p-2">Date & Time</th>
+                                        <th class="p-2">Lab</th>
+                                        <th class="p-2">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic content will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Equipment Booking Section -->
+                    <div id="equipment-booking-section" class="hidden">
+                        <h2 class="text-lg font-semibold text-ece-gray mb-4 flex items-center space-x-2"><i class="fas fa-tools"></i><span>Equipment Booking</span></h2>
+                        <button id="new-equipment-booking-btn" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mb-4 flex items-center space-x-2"><i class="fas fa-plus"></i><span>New Equipment Booking</span></button>
+                        <div class="bg-white p-4 rounded-lg">
+                            <h3 class="text-md font-semibold text-ece-gray mb-2">Equipment Requests</h3>
+                            <table id="equipment-requests" class="w-full text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="p-2">Equipment</th>
+                                        <th class="p-2">Duration</th>
+                                        <th class="p-2">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic content will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+<!-- Minimized Lab Booking Modal -->
+<div id="lab-booking-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-gray-100 p-4 rounded-lg shadow-lg w-full max-w-md">
+        <h3 class="text-lg font-semibold text-ece-gray mb-4">New Lab Booking</h3>
+        <form id="lab-booking-form" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Purpose</label>
+                    <input type="text" name="purpose" class="mt-1 w-full p-2 border rounded-md" required placeholder="Project Testing">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Course</label>
+                    <input type="text" name="course_name" class="mt-1 w-full p-2 border rounded-md" required placeholder="Course name">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Lab Room</label>
+                    <input type="text" name="lab_room" class="mt-1 w-full p-2 border rounded-md" required placeholder="Lab room">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Date</label>
+                    <input type="date" name="booking_date" class="mt-1 w-full p-2 border rounded-md" required min="2025-05-15">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Start Time</label>
+                    <input type="time" name="start_time" class="mt-1 w-full p-2 border rounded-md" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Duration (hrs)</label>
+                    <input type="number" name="duration_hours" class="mt-1 w-full p-2 border rounded-md" required min="1" max="4">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Group Members</label>
+                <textarea name="group_members" class="mt-1 w-full p-2 border rounded-md" rows="2" placeholder="Student IDs or names"></textarea>
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button type="button" id="close-lab-booking-modal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2">
+                    <i class="fas fa-save"></i>
+                    <span>Submit</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+            <!-- Equipment Booking Modal -->
+            <div id="equipment-booking-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-gray-100 p-4 rounded-lg shadow-lg w-full max-w-md">
+                    <h3 class="text-lg font-semibold text-ece-gray mb-4">New Equipment Booking</h3>
+                    <form id="equipment-booking-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Equipment Needed</label>
+                            <input type="text" name="equipment_name" class="mt-1 w-full p-2 border rounded-md" required placeholder="Enter equipment name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Purpose</label>
+                            <input type="text" name="purpose" class="mt-1 w-full p-2 border rounded-md" required placeholder="e.g., Robotics Project">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <input type="date" name="start_date" class="mt-1 w-full p-2 border rounded-md" required min="2025-05-15">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">End Date</label>
+                            <input type="date" name="end_date" class="mt-1 w-full p-2 border rounded-md" required min="2025-05-15">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Location of Use</label>
+                            <select name="location" class="mt-1 w-full p-2 border rounded-md" required>
+                                <option value="In-Lab">In-Lab</option>
+                                <option value="Take-Home">Take-Home</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" id="close-equipment-booking-modal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 flex items-center space-x-2"><i class="fas fa-save"></i><span>Submit</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/students/student-lab-and-equipment-request.js"></script>
+</body>
+
+</html>

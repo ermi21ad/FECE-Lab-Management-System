@@ -9,7 +9,7 @@ A full-stack Lab Management System built for the **Faculty of Electrical and Com
 ### 🖥️ Frontend
 
 * **HTML**, **CSS**, **JavaScript**
-* Vanilla JS (No frameworks like React)
+* Vanilla JS 
 * Responsive, user-friendly UI
 
 ### ⚙️ Backend
